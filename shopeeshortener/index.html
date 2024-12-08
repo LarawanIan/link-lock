@@ -8,22 +8,43 @@
   <title>Shopee URL Shortener</title>
   <script>
     function shortenShopeeUrl() {
-      const inputUrl = document.getElementById("url").value;
-      const pattern = /i\.(\d+)\.(\d+)/;
-      const match = inputUrl.match(pattern);
+          const inputUrl = document.getElementById("url").value;
+          const outputField = document.getElementById("output");
+          const errorField = document.getElementById("error");
+          
+          // Patterns for shortened links
+          const shortPattern = /^https:\/\/shopee\.ph\/product\/\d+\/\d+$/;
+          const mobileShortPattern = /^https:\/\/ph\.shp\.ee\/[\w\d]+$/;
 
-      if (match) {
-        const productId = match[1];
-        const shopId = match[2];
-        const shortenedUrl = `https://shopee.ph/product/${productId}/${shopId}`;
-        document.getElementById("output").value = shortenedUrl;
-        document.getElementById("error").textContent = "";
-      } else {
-        document.getElementById("output").value = "";
-        document.getElementById("error").textContent =
-          "Invalid Shopee link. Please provide a valid Shopee URL.";
-      }
-    }
+          // Check if the URL is already shortened
+          if (shortPattern.test(inputUrl)) {
+            errorField.textContent = "Link is already shortened!";
+            outputField.value = "";
+            return;
+          }
+
+          if (mobileShortPattern.test(inputUrl)) {
+            errorField.textContent = "Link is already shortened from the Mobile App!";
+            outputField.value = "";
+            return;
+          }
+
+          // Regex to extract product and shop IDs from long links
+          const longPattern = /i\.(\d+)\.(\d+)/;
+          const match = inputUrl.match(longPattern);
+
+          if (match) {
+            const productId = match[1];
+            const shopId = match[2];
+            const shortenedUrl = `https://shopee.ph/product/${productId}/${shopId}`;
+            outputField.value = shortenedUrl;
+            errorField.textContent = "";
+          } else {
+            // If the URL doesn't match any known Shopee pattern
+            errorField.textContent = "Invalid Shopee link. Please provide a valid Shopee URL.";
+            outputField.value = "";
+          }
+        }
   </script>
 </head>
 
