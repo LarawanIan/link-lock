@@ -220,6 +220,20 @@ code {
   color: gray;
 }
 
+button.shopee {
+  background-color: rgb(237, 77, 45); /* Shopee's orange color */
+  color: white;                      /* Black text */
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button.shopee:hover {
+  opacity: 0.9; /* Slightly dim the button when hovered */
+}
+
 /* Buttons on the same line as inputs */
 .inline-button-container {
   display: flex;
